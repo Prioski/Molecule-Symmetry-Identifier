@@ -16,7 +16,6 @@ public:
                 mat[i][j] = input[j][i];
         }
     }
-    /*
     std::array<int, n> operator[](int obj) const;
     std::array<int, n>& operator[](int obj);
     void print();
@@ -24,7 +23,6 @@ public:
     void operator=(Matrix<n> obj);
     Vector<n> operator*(Vector<n> vec);
     Matrix<n> operator*(Matrix<n> obj);
-    */
 };
 
 #endif

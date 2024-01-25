@@ -16,11 +16,11 @@ public:
             vec[i] = input[i];
     }
     void print();
-    //int operator[](int obj) const;
-    //int& operator[](int obj);
-    //Vector<n> operator+(Vector<n> obj);
-    //bool operator==(Vector<n> obj);
-    //void operator=(Vector<n> obj);
+    int operator[](int obj) const;
+    int& operator[](int obj);
+    Vector<n> operator+(Vector<n> obj);
+    bool operator==(Vector<n> obj);
+    void operator=(Vector<n> obj);
 };
 
 #endif

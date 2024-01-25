@@ -59,6 +59,41 @@ Structure obtain_structure()
 	}
 }
 */
+std::ostream& operator<<(std::ostream& out, Group group_type)
+{
+	switch (group_type)
+	{
+	case C_infinityv: return out << "C_infinityv";
+	case D_infinityh:   return out << "D_infinityh";
+	case O_h:  return out << "O_h";
+	case T_d: return out << "T_d";
+	case D_2h: return out << "D_2h";
+	case D_3h: return out << "D_3h";
+	case D_4h: return out << "D_4h";
+	case D_2d: return out << "D_2d";
+	case D_3d: return out << "D_3d";
+	case D_4d: return out << "D_4d";
+	case D_2: return out << "D_2";
+	case D_3: return out << "D_3";
+	case D_4: return out << "D_4";
+	case C_2: return out << "C_2";
+	case C_3: return out << "C_3";
+	case C_4: return out << "C_4";
+	case S_2: return out << "S_2";
+	case S_4: return out << "S_4";
+	case C_2h: return out << "C_2h";
+	case C_3h: return out << "C_3h";
+	case C_4h: return out << "C_4h";
+	case C_2v: return out << "C_2v";
+	case C_3v: return out << "C_3v";
+	case C_4v: return out << "C_4v";
+	case C_s: return out << "C_s";
+	case C_1: return out << "C_1";
+	case C_i: return out << "C_i";
+	default:    return out << "???";
+	}
+}
+
 std::ostream& operator<<(std::ostream& out, Structure structure_type)
 {
 	switch (structure_type)
@@ -98,10 +133,10 @@ Group identify_group(Structure structure_type)
 	switch (structure_type)
 	{
 	case Linear: return linear_group_identify();
-		//case Trigonal_planar: return trigonal_planar_group_identify();
-		//case Tetrahedral: return tetrahedral_group_identify();
-		//case Trigonal_bipyrimidal: return trigonal_bipyrimidal_group_identify();
-		//case Octahedral: return octahedral_group_identify();
+	case Trigonal_planar: return trigonal_planar_group_identify();
+	case Tetrahedral: return tetrahedral_group_identify();
+	case Trigonal_bipyrimidal: return trigonal_bipyrimidal_group_identify();
+	case Octahedral: return octahedral_group_identify();
 	default: return Error;
 	}
 }
@@ -109,20 +144,16 @@ Group identify_group(Structure structure_type)
 
 Group linear(int a_1, int a_2)
 {
-	//Vector<2> vec{ {a_1, a_2} };
-	//vec.print();
-	//vec.print();
-	//Matrix<2> mat{ {0, 1, 1, 0} };
-	//if (mat * vec == vec)
-	//	return D_infinityh;
-	//else
-	//	return C_infinityv;
-	return C_infinityv;
+	Vector<2> vec{ {a_1, a_2} };
+	Matrix<2> mat{ {0, 1, 1, 0} };
+	if (mat * vec == vec)
+		return D_infinityh;
+	else
+		return C_infinityv;
 }
 
 int main()
 {
-	Vector<2> vec{ {1, 0} };
-	vec.print();
+	std::cout << linear(1, 1);
 	return 0;
 }
