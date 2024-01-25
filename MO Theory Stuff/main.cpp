@@ -105,7 +105,7 @@ Group identify_group(Structure structure_type)
 	}
 }
 
-int joe()
+int main()
 {
 	//Structure structure{ obtain_structure() };
 	//std::cout << structure;
