@@ -71,6 +71,16 @@ public:
         return res;
     }
 
+    Matrix2D operator*(Matrix2D obj)
+    {
+        Matrix2D res;
+        res[0][0] = (mat[0][0] * obj[0][0]) + (mat[1][0] * obj[0][1]);
+        res[1][0] = (mat[0][0] * obj[1][0]) + (mat[1][0] * obj[1][1]);
+        res[0][1] = (mat[0][1] * obj[0][0]) + (mat[1][1] * obj[0][1]);
+        res[1][1] = (mat[0][1] * obj[1][0]) + (mat[1][1] * obj[1][1]);
+        return res;
+    }
+
     std::array<int, 2> operator[](int obj) const
     {
         return mat[obj];
