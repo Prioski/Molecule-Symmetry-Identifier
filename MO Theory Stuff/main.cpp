@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
-#include <vector>
-
+#include <array>
+#include "Vector.h"
+#include "Matrix.h"
 
 enum Group
 {
@@ -32,7 +33,6 @@ enum Group
 	C_s,
 	C_1,
 	C_i,
-	Error,
 };
 
 enum Structure
@@ -44,6 +44,7 @@ enum Structure
 	Octahedral,
 };
 
+/*
 Structure obtain_structure()
 {
 	std::cout << "What structure do you want to use? Insert number for number of bonds: " << '\n';
@@ -57,7 +58,7 @@ Structure obtain_structure()
 			std::cout << "Invalid input. Select a number from 2 to 6" << '\n';
 	}
 }
-
+*/
 std::ostream& operator<<(std::ostream& out, Structure structure_type)
 {
 	switch (structure_type)
@@ -70,7 +71,7 @@ std::ostream& operator<<(std::ostream& out, Structure structure_type)
 	default:    return out << "???";
 	}
 }
-
+/*
 Group linear_group_identify()
 {
 	int a_1{ 1 }, a_2{ 1 };
@@ -86,10 +87,10 @@ Group linear_group_identify()
 }
 
 
-//Group trigonal_planar_group_identify(){}
-//Group tetrahedral_group_identify(){}
-//Group trigonal_bipyrimidal_group_identify(){}
-//Group octahedral_group_identify(){}
+Group trigonal_planar_group_identify(){}
+Group tetrahedral_group_identify(){}
+Group trigonal_bipyrimidal_group_identify(){}
+Group octahedral_group_identify(){}
 
 
 Group identify_group(Structure structure_type)
@@ -104,13 +105,24 @@ Group identify_group(Structure structure_type)
 	default: return Error;
 	}
 }
+*/
+
+Group linear(int a_1, int a_2)
+{
+	Vector<2> vec{ {a_1, a_2} };
+	vec.print();
+	//vec.print();
+	//Matrix<2> mat{ {0, 1, 1, 0} };
+	//if (mat * vec == vec)
+	//	return D_infinityh;
+	//else
+	//	return C_infinityv;
+	return C_infinityv;
+}
+
 
 int main()
 {
-	//Structure structure{ obtain_structure() };
-	//std::cout << structure;
-	Group group{ identify_group(Linear) };
-	std::cout << group;
-
+	std::cout << linear(1, 1);
 	return 0;
 }
