@@ -123,6 +123,6 @@ Group linear(int a_1, int a_2)
 int main()
 {
 	Vector<2> vec{ {1, 0} };
-	vec.Vector<2>::print();
+	vec.print();
 	return 0;
 }

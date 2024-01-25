@@ -76,3 +76,5 @@ void Vector<n>::print()
     }
     std::cout << ")" << '\n';
 }
+
+template class Vector<2>;

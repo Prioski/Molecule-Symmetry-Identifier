@@ -3,7 +3,6 @@
 #define VECTOR_H
 
 #include <array>
-#include <iostream>
 
 template<int n>
 class Vector
