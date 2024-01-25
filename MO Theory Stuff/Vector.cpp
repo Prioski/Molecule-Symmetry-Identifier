@@ -2,6 +2,7 @@
 #include <array>
 #include "Vector.h"
 
+/*
 template<int n>
 class Vector
 {
@@ -60,3 +61,18 @@ public:
             vec[i] = obj[i];
     }
 };
+*/
+
+template<int n>
+void Vector<n>::print()
+{
+    std::cout << "(";
+    for (int i = 0; i < n; i++)
+    {
+        if (i == n - 1)
+            std::cout << vec[i];
+        else
+            std::cout << vec[i] << ", ";
+    }
+    std::cout << ")" << '\n';
+}

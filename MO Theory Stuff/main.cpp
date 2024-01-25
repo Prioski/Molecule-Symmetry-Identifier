@@ -109,8 +109,8 @@ Group identify_group(Structure structure_type)
 
 Group linear(int a_1, int a_2)
 {
-	Vector<2> vec{ {a_1, a_2} };
-	vec.print();
+	//Vector<2> vec{ {a_1, a_2} };
+	//vec.print();
 	//vec.print();
 	//Matrix<2> mat{ {0, 1, 1, 0} };
 	//if (mat * vec == vec)
@@ -120,9 +120,9 @@ Group linear(int a_1, int a_2)
 	return C_infinityv;
 }
 
-
 int main()
 {
-	std::cout << linear(1, 1);
+	Vector<2> vec{ {1, 0} };
+	vec.Vector<2>::print();
 	return 0;
 }
