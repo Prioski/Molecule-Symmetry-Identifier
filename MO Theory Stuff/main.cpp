@@ -3,6 +3,7 @@
 #include <array>
 #include "Vector.h"
 #include "Matrix.h"
+#include "Header.h"
 
 enum Group
 {
@@ -142,6 +143,41 @@ Group identify_group(Structure structure_type)
 }
 */
 
+Group tetrahedral(int a_1, int a_2, int a_3, int a_4)
+{
+	Vector<4> vec{ {a_1, a_2, a_3, a_4} };
+	Matrix<4> mat_c3_1{ {1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0} };
+	Matrix<4> mat_c3_2{ {0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0} };
+	Matrix<4> mat_c3_3{ {0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0} };
+	Matrix<4> mat_c3_4{ {0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1} };
+
+	if (mat_c3_1 * vec == vec and mat_c3_2 * vec == vec and mat_c3_3 * vec == vec and mat_c3_3 * vec == vec and mat_c3_4 * vec == vec)
+		return T_d;
+	else
+}
+
+Group trigonal_planar(int a_1, int a_2, int a_3)
+{
+	Vector<3> vec{ {a_1, a_2, a_3} };
+	//Matrix naming convention given by mat_cN_x where N is the order of the rotation that is equivallent to I and x is the axis of rotation.
+	Matrix<3> mat_c3{ {0, 1, 0, 0, 0, 1, 1, 0, 0} };
+	Matrix<3> mat_c2_1{ {1, 0, 0, 0, 0, 1, 0, 1, 0} };
+	Matrix<3> mat_c2_2{ {0, 0, 1, 0, 1, 0, 1, 0, 0} };
+	Matrix<3> mat_c2_3{ {0, 1, 0, 1, 0, 0, 0, 0, 1} };
+
+	if (mat_c3 * vec == vec)
+	{
+		return D_3h;
+	}
+	else
+	{
+		if (mat_c2_1 * vec == vec or mat_c2_2 * vec == vec or mat_c2_3 * vec == vec)
+			return C_2h;
+		else
+			return C_s;
+	}
+}
+
 Group linear(int a_1, int a_2)
 {
 	Vector<2> vec{ {a_1, a_2} };
@@ -154,6 +190,6 @@ Group linear(int a_1, int a_2)
 
 int main()
 {
-	std::cout << linear(1, 1);
+	std::cout << trigonal_planar(0, 1, 1);
 	return 0;
 }
