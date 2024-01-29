@@ -237,6 +237,30 @@ Group octahedral_identifier(Vector<6> vec)
 					  1, 0, 0, 0, 0, 0} };
 	if (mat_c4_1 * vec == vec and mat_c4_2 * vec == vec)
 		return O_h;
+	else if (mat_c4_1 * vec == vec or mat_c4_2 * vec == vec or mat_c4_3 * vec == vec)
+	{
+		if (mat_i * vec == vec)
+			return D_4h;
+		else
+			return C_4v;
+	}
+	else if (mat_c3_123 * vec == vec or mat_c3_125 * vec == vec or mat_c3_134 * vec == vec)
+		return C_3v;
+	else if (mat_c2_12 * vec == vec or mat_c2_13 * vec == vec or mat_c2_14 * vec == vec or mat_c2_23 * vec == vec or mat_c2_25 * vec == vec)
+		return C_2v;
+	else if (mat_c2_1 * vec == vec or mat_c2_2 * vec == vec or mat_c2_3 * vec == vec)
+	{
+		if (mat_i * vec == vec)
+			return C_2h;
+		else
+			return C_2v;
+	}
+	else
+		return C_1;
+
+	/*
+	if (mat_c4_1 * vec == vec and mat_c4_2 * vec == vec)
+		return O_h;
 	else
 	{
 		if (mat_c4_1 * vec == vec or mat_c4_2 * vec == vec or mat_c4_3 * vec == vec)
@@ -269,6 +293,7 @@ Group octahedral_identifier(Vector<6> vec)
 			}
 		}
 	}
+	*/
 }
 
 Group trigonal_bipyramidal_identifier(Vector<5> vec)
@@ -313,7 +338,17 @@ Group trigonal_bipyramidal_identifier(Vector<5> vec)
 						  0, 0, 1, 0, 0,
 						  0, 0, 0, 1, 0,
 						  1, 0, 0, 0, 0} };
-
+	if (mat_c3_1 * vec == vec and mat_c2_2 * vec == vec)
+		return D_3h;
+	else if (mat_c3_1 * vec == vec)
+		return C_3v;
+	else if (mat_c2_2 * vec == vec or mat_c2_3 * vec == vec or mat_c2_4 * vec == vec)
+		return C_2v;
+	else if (mat_s_125 * vec == vec or mat_s_135 * vec == vec or mat_s_145 * vec == vec or mat_s_234 * vec == vec)
+		return C_s;
+	else
+		return C_1;
+	/*
 	if (mat_c3_1 * vec == vec and mat_c2_2 * vec == vec)
 		return D_3h;
 	else
@@ -334,6 +369,7 @@ Group trigonal_bipyramidal_identifier(Vector<5> vec)
 
 		}
 	}
+	*/
 }
 
 
@@ -347,7 +383,15 @@ Group tetrahedral_identifier(Vector<4> vec)
 	Matrix<4> mat_c2_13{ {0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0} };
 	Matrix<4> mat_c2_14{ {0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0} };
 
-
+	if (mat_c3_1 * vec == vec and mat_c3_2 * vec == vec and mat_c3_3 * vec == vec and mat_c3_3 * vec == vec and mat_c3_4 * vec == vec)
+		return T_d;
+	else if (mat_c3_1 * vec == vec or mat_c3_2 * vec == vec or mat_c3_3 * vec == vec or mat_c3_3 * vec == vec or mat_c3_4 * vec == vec)
+		return C_3v;
+	else if (mat_c2_12 * vec == vec or mat_c2_13 * vec == vec or mat_c2_14 * vec == vec)
+		return C_2v;
+	else
+		return C_1;
+	/*
 	if (mat_c3_1 * vec == vec and mat_c3_2 * vec == vec and mat_c3_3 * vec == vec and mat_c3_3 * vec == vec and mat_c3_4 * vec == vec)
 		return T_d;
 	else
@@ -362,6 +406,7 @@ Group tetrahedral_identifier(Vector<4> vec)
 				return C_1;
 		}
 	}
+	*/
 }
 
 Group trigonal_planar_identifier(Vector<3> vec)
@@ -376,6 +421,11 @@ Group trigonal_planar_identifier(Vector<3> vec)
 	{
 		return D_3h;
 	}
+	else if (mat_c2_1 * vec == vec or mat_c2_2 * vec == vec or mat_c2_3 * vec == vec)
+		return C_2h;
+	else
+		return C_s;
+	/*
 	else
 	{
 		if (mat_c2_1 * vec == vec or mat_c2_2 * vec == vec or mat_c2_3 * vec == vec)
@@ -383,6 +433,7 @@ Group trigonal_planar_identifier(Vector<3> vec)
 		else
 			return C_s;
 	}
+	*/
 }
 
 Group linear_identifier(Vector<2> vec)
@@ -396,7 +447,7 @@ Group linear_identifier(Vector<2> vec)
 
 int main()
 {
-	Vector<6> vect{ {0, 1, 1, 1, 0, 0} };
+	Vector<6> vect{ {1, 2, 2, 3, 3, 1} };
 	std::cout << octahedral_identifier(vect);
 	return 0;
 }
