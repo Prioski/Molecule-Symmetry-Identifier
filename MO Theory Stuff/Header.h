@@ -4,7 +4,9 @@
 
 enum Structure;
 enum Group;
-Group trigonal_planar(int a_1, int a_2, int a_3);
-Group linear(int a_1, int a_2);
+Group trigonal_planar_identifier(Vector<3> vec);
+Group linear_identifier(Vector<2> vec);
+Group tetrahedral_identifier(Vector<4> vec);
+Group trigonal_bipyramidal_identifier(Vector<5> vec);
 
 #endif
