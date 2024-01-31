@@ -1,8 +1,7 @@
 #include "Vector.h"
 #include <string>
 #pragma once
-#ifndef HEADER_H
-#define HEADER_H
+
 
 enum Group
 {
@@ -36,18 +35,16 @@ enum Group
 };
 enum Structure
 {
-	Linear = 2,
+	Linear,
 	Trigonal_planar,
 	Tetrahedral,
 	Trigonal_bipyramidal,
 	Octahedral,
 };
 
-const std::wstring wGroupName(Group pointGroup);
+const char* GroupName(Group pointGroup);
 Group trigonal_planar_identifier(Vector<3> vec =Vector<3>{ {} });
 Group linear_identifier(Vector<2> vec = Vector<2>{ {} });
 Group tetrahedral_identifier(Vector<4> vec = Vector<4>{ {} });
 Group trigonal_bipyramidal_identifier(Vector<5> vec = Vector<5>{ {} });
 Group octahedral_identifier(Vector<6> vec = Vector<6>{ {} });
-
-#endif

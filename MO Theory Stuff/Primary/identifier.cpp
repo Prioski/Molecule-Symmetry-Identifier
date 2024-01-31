@@ -3,8 +3,7 @@
 #include <array>
 #include "Vector.h"
 #include "Matrix.h"
-#include "Header.h"
-#include "Window.h"
+#include "identifier.h"
 
 /*
 Structure obtain_structure()
@@ -22,37 +21,39 @@ Structure obtain_structure()
 }
 */
 
-const std::wstring wGroupName(Group pointGroup)
+
+const char* GroupName(Group pointGroup)
 {
 	switch (pointGroup)
 	{
-	case C_infinityv: return L"C_infinityv";
-	case D_infinityh:   return L"D_infinityh";
-	case O_h:  return L"O_h";
-	case T_d: return L"T_d";
-	case D_2h: return L"D_2h";
-	case D_3h: return L"D_3h";
-	case D_4h: return L"D_4h";
-	case D_2d: return L"D_2d";
-	case D_3d: return L"D_3d";
-	case D_4d: return L"D_4d";
-	case D_2: return L"D_2";
-	case D_3: return L"D_3";
-	case D_4: return L"D_4";
-	case C_1: return L"C_1";
-	case C_2: return L"C_2";
-	case C_3: return L"C_3";
-	case C_4: return L"C_4";
-	case S_2: return L"S_2";
-	case S_4: return L"S_4";
-	case C_2h: return L"C_2h";
-	case C_3h: return L"C_3h";
-	case C_4h: return L"C_4h";
-	case C_2v: return L"C_2v";
-	case C_3v: return L"C_3v";
-	case C_4v: return L"C_4v";
-	case C_s: return L"C_s";
-	case C_i: return L"C_i";
+	case C_infinityv: return "C_infinityv";
+	case D_infinityh:   return "D_infinityh";
+	case O_h:  return "O_h";
+	case T_d: return "T_d";
+	case D_2h: return "D_2h";
+	case D_3h: return "D_3h";
+	case D_4h: return "D_4h";
+	case D_2d: return "D_2d";
+	case D_3d: return "D_3d";
+	case D_4d: return "D_4d";
+	case D_2: return "D_2";
+	case D_3: return "D_3";
+	case D_4: return "D_4";
+	case C_1: return "C_1";
+	case C_2: return "C_2";
+	case C_3: return "C_3";
+	case C_4: return "C_4";
+	case S_2: return "S_2";
+	case S_4: return "S_4";
+	case C_2h: return "C_2h";
+	case C_3h: return "C_3h";
+	case C_4h: return "C_4h";
+	case C_2v: return "C_2v";
+	case C_3v: return "C_3v";
+	case C_4v: return "C_4v";
+	case C_s: return "C_s";
+	case C_i: return "C_i";
+	default: return "Error";
 	}
 }
 
@@ -380,6 +381,30 @@ Group tetrahedral_identifier(Vector<4> vec)
 	Matrix<4> mat_c2_12{ {0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0} };
 	Matrix<4> mat_c2_13{ {0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0} };
 	Matrix<4> mat_c2_14{ {0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0} };
+	Matrix<4> mat_s_12{ {1, 0, 0, 0,
+						 0, 1, 0, 0,
+						 0, 0, 0, 1,
+						 0, 0, 1, 0 } };
+	Matrix<4> mat_s_13{ {1, 0, 0, 0,
+						 0, 0, 0, 1,
+						 0, 0, 1, 0,
+						 0, 1, 0, 0 } };
+	Matrix<4> mat_s_14{ {1, 0, 0, 0,
+						 0, 0, 1, 0,
+						 0, 1, 0, 0,
+						 0, 0, 0, 1 } };
+	Matrix<4> mat_s_23{ {0, 0, 0, 1,
+						 0, 1, 0, 0,
+						 0, 0, 1, 0,
+						 1, 0, 0, 0} };
+	Matrix<4> mat_s_24{ {0, 0, 1, 0,
+						 0, 1, 0, 0,
+						 1, 0, 0, 0,
+						 0, 0, 0, 1} };
+	Matrix<4> mat_s_34{ {0, 1, 0, 0,
+						 1, 0, 0, 0,
+						 0, 0, 1, 0,
+						 0, 0, 0, 1} };
 
 	if (mat_c3_1 * vec == vec and mat_c3_2 * vec == vec and mat_c3_3 * vec == vec and mat_c3_3 * vec == vec and mat_c3_4 * vec == vec)
 		return T_d;
@@ -387,6 +412,8 @@ Group tetrahedral_identifier(Vector<4> vec)
 		return C_3v;
 	else if (mat_c2_12 * vec == vec or mat_c2_13 * vec == vec or mat_c2_14 * vec == vec)
 		return C_2v;
+	else if (mat_s_12 * vec == vec or mat_s_13 * vec == vec or mat_s_14 * vec == vec or mat_s_23 * vec == vec or mat_s_24 * vec == vec or mat_s_34 * vec == vec)
+		return C_s;
 	else
 		return C_1;
 	/*
@@ -441,27 +468,4 @@ Group linear_identifier(Vector<2> vec)
 		return D_infinityh;
 	else
 		return C_infinityv;
-}
-
-int main()
-{
-	std::cout << "Creating Window\n";
-	Window* pWindow = new Window();
-
-	bool running = true;
-
-	while (running)
-	{
-		if (!pWindow->ProcessMessages())
-		{
-			std::cout << "Closing Window\n";
-			running = false;
-		}
-
-		Sleep(10);
-	}
-
-	delete pWindow;
-
-	return 0;
 }

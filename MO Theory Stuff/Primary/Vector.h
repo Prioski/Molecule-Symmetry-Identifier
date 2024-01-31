@@ -1,7 +1,4 @@
 #pragma once
-#ifndef VECTOR_H
-#define VECTOR_H
-
 #include <array>
 
 template<int n>
@@ -22,5 +19,3 @@ public:
     bool operator==(Vector<n> obj);
     void operator=(Vector<n> obj);
 };
-
-#endif

@@ -1,6 +1,4 @@
 #pragma once
-#ifndef MATRIX_H
-#define MATRIX_H
 
 template<int n>
 class Matrix
@@ -24,5 +22,3 @@ public:
     Vector<n> operator*(Vector<n> vec);
     Matrix<n> operator*(Matrix<n> obj);
 };
-
-#endif
