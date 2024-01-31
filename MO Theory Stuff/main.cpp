@@ -4,46 +4,7 @@
 #include "Vector.h"
 #include "Matrix.h"
 #include "Header.h"
-
-enum Group
-{
-	C_infinityv,
-	D_infinityh,
-	O_h,
-	T_d,
-	D_2h,
-	D_3h,
-	D_4h,
-	D_2d,
-	D_3d,
-	D_4d,
-	D_2,
-	D_3,
-	D_4,
-	C_2,
-	C_3,
-	C_4,
-	S_2,
-	S_4,
-	C_2h,
-	C_3h,
-	C_4h,
-	C_2v,
-	C_3v,
-	C_4v,
-	C_s,
-	C_1,
-	C_i,
-};
-
-enum Structure
-{
-	Linear = 2,
-	Trigonal_planar,
-	Tetrahedral,
-	Trigonal_bipyramidal,
-	Octahedral,
-};
+#include "Window.h"
 
 /*
 Structure obtain_structure()
@@ -60,6 +21,43 @@ Structure obtain_structure()
 	}
 }
 */
+
+const std::wstring wGroupName(Group pointGroup)
+{
+	switch (pointGroup)
+	{
+	case C_infinityv: return L"C_infinityv";
+	case D_infinityh:   return L"D_infinityh";
+	case O_h:  return L"O_h";
+	case T_d: return L"T_d";
+	case D_2h: return L"D_2h";
+	case D_3h: return L"D_3h";
+	case D_4h: return L"D_4h";
+	case D_2d: return L"D_2d";
+	case D_3d: return L"D_3d";
+	case D_4d: return L"D_4d";
+	case D_2: return L"D_2";
+	case D_3: return L"D_3";
+	case D_4: return L"D_4";
+	case C_1: return L"C_1";
+	case C_2: return L"C_2";
+	case C_3: return L"C_3";
+	case C_4: return L"C_4";
+	case S_2: return L"S_2";
+	case S_4: return L"S_4";
+	case C_2h: return L"C_2h";
+	case C_3h: return L"C_3h";
+	case C_4h: return L"C_4h";
+	case C_2v: return L"C_2v";
+	case C_3v: return L"C_3v";
+	case C_4v: return L"C_4v";
+	case C_s: return L"C_s";
+	case C_i: return L"C_i";
+	}
+}
+
+
+
 std::ostream& operator<<(std::ostream& out, Group group_type)
 {
 	switch (group_type)
@@ -447,7 +445,23 @@ Group linear_identifier(Vector<2> vec)
 
 int main()
 {
-	Vector<6> vect{ {1, 2, 2, 3, 3, 1} };
-	std::cout << octahedral_identifier(vect);
+	std::cout << "Creating Window\n";
+	Window* pWindow = new Window();
+
+	bool running = true;
+
+	while (running)
+	{
+		if (!pWindow->ProcessMessages())
+		{
+			std::cout << "Closing Window\n";
+			running = false;
+		}
+
+		Sleep(10);
+	}
+
+	delete pWindow;
+
 	return 0;
 }
