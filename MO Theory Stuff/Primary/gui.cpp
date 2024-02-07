@@ -5,19 +5,141 @@
 #include "../Imgui/imgui_impl_win32.h"
 #include "identifier.h"
 
+typedef struct
+{
+	DWORD R;
+	DWORD G;
+	DWORD B;
+	DWORD A;
+}RGBA;
+RGBA red = { 255,0,0,255 };
+static void DrawStrokeText(int x, int y, RGBA* color, const char* str)
+{
+	ImFont a;
+	std::string utf_8_1 = std::string(str);
+	std::string utf_8_2 = (utf_8_1);
+	ImGui::GetForegroundDrawList()->AddText(ImVec2(x, y - 1), ImGui::ColorConvertFloat4ToU32(ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)), utf_8_2.c_str());
+	ImGui::GetForegroundDrawList()->AddText(ImVec2(x, y + 1), ImGui::ColorConvertFloat4ToU32(ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)), utf_8_2.c_str());
+	ImGui::GetForegroundDrawList()->AddText(ImVec2(x - 1, y), ImGui::ColorConvertFloat4ToU32(ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)), utf_8_2.c_str());
+	ImGui::GetForegroundDrawList()->AddText(ImVec2(x + 1, y), ImGui::ColorConvertFloat4ToU32(ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)), utf_8_2.c_str());
+	ImGui::GetForegroundDrawList()->AddText(ImVec2(x, y), ImGui::ColorConvertFloat4ToU32(ImVec4(color->R / 255.0, color->G / 255.0, color->B / 255.0, color->A / 255.0)), utf_8_2.c_str());
+}
+static void DrawNewText(int x, int y, RGBA* color, const char* str)
+{
+	//	ImFont a;
+	//ImGuiIO& io = ImGui::GetIO();
+		//ImFont* pFont = io.Fonts->AddFontFromFileTTF("sansation.ttf", 10.0f);
+		//a.FontSize = 5.f;
+	std::string utf_8_1 = std::string(str);
+	std::string utf_8_2 = (utf_8_1);
+	ImGui::GetForegroundDrawList()->AddText(ImVec2(x, y), ImGui::ColorConvertFloat4ToU32(ImVec4(color->R / 255.0, color->G / 255.0, color->B / 255.0, color->A / 255.0)), utf_8_2.c_str());
+}
+static void DrawRect(int x, int y, int w, int h, RGBA* color, int thickness)
+{
+	ImGui::GetForegroundDrawList()->AddRect(ImVec2(x, y), ImVec2(x + w, y + h), ImGui::ColorConvertFloat4ToU32(ImVec4(color->R / 255.0, color->G / 255.0, color->B / 255.0, color->A / 255.0)), 0, 0, thickness);
+}
+static void DrawFilledRect(int x, int y, int w, int h, RGBA* color)
+{
+	ImGui::GetForegroundDrawList()->AddRectFilled(ImVec2(x, y - 1), ImVec2(x + w, y + h), ImGui::ColorConvertFloat4ToU32(ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)), 0, 0);
+	ImGui::GetForegroundDrawList()->AddRectFilled(ImVec2(x, y + 1), ImVec2(x + w, y + h), ImGui::ColorConvertFloat4ToU32(ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)), 0, 0);
+	ImGui::GetForegroundDrawList()->AddRectFilled(ImVec2(x - 1, y), ImVec2(x + w, y + h), ImGui::ColorConvertFloat4ToU32(ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)), 0, 0);
+	ImGui::GetForegroundDrawList()->AddRectFilled(ImVec2(x + 1, y), ImVec2(x + w, y + h), ImGui::ColorConvertFloat4ToU32(ImVec4(1 / 255.0, 1 / 255.0, 1 / 255.0, 255 / 255.0)), 0, 0);
+	ImGui::GetForegroundDrawList()->AddRectFilled(ImVec2(x, y), ImVec2(x + w, y + h), ImGui::ColorConvertFloat4ToU32(ImVec4(color->R / 255.0, color->G / 255.0, color->B / 255.0, color->A / 255.0)), 0, 0);
+}
+static void DrawFilledRectIMCol(int x, int y, int w, int h, ImU32 col)
+{
+	ImGui::GetForegroundDrawList()->AddRectFilled(ImVec2(x, y), ImVec2(x + w, y + h), col, 0, 0);
+}
+static void DrawCircleFilled(int x, int y, int radius, RGBA* color, int segments)
+{
+	ImGui::GetForegroundDrawList()->AddCircleFilled(ImVec2(x, y), radius, ImGui::ColorConvertFloat4ToU32(ImVec4(color->R / 255.0, color->G / 255.0, color->B / 255.0, color->A / 255.0)), segments);
+}
+static void DrawCircle(int x, int y, int radius, RGBA* color, int segments)
+{
+	ImGui::GetForegroundDrawList()->AddCircle(ImVec2(x, y), radius, ImGui::ColorConvertFloat4ToU32(ImVec4(color->R / 255.0, color->G / 255.0, color->B / 255.0, color->A / 255.0)), segments);
+}
+static void DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, RGBA* color, float thickne)
+{
+	ImGui::GetForegroundDrawList()->AddTriangle(ImVec2(x1, y1), ImVec2(x2, y2), ImVec2(x3, y3), ImGui::ColorConvertFloat4ToU32(ImVec4(color->R / 255.0, color->G / 255.0, color->B / 255.0, color->A / 255.0)), thickne);
+}
+static void DrawTriangleFilled(int x1, int y1, int x2, int y2, int x3, int y3, RGBA* color)
+{
+	ImGui::GetForegroundDrawList()->AddTriangleFilled(ImVec2(x1, y1), ImVec2(x2, y2), ImVec2(x3, y3), ImGui::ColorConvertFloat4ToU32(ImVec4(color->R / 255.0, color->G / 255.0, color->B / 255.0, color->A / 255.0)));
+}
+static void DrawLine(int x1, int y1, int x2, int y2, RGBA* color, int thickness)
+{
+	ImGui::GetForegroundDrawList()->AddLine(ImVec2(x1, y1), ImVec2(x2, y2), ImGui::ColorConvertFloat4ToU32(ImVec4(color->R / 255.0, color->G / 255.0, color->B / 255.0, color->A / 255.0)), thickness);
+}
+static void DrawCornerBox(int x, int y, int w, int h, int borderPx, RGBA* color)
+{
+	DrawFilledRect(x + borderPx, y, w / 3, borderPx, color); //top 
+	DrawFilledRect(x + w - w / 3 + borderPx, y, w / 3, borderPx, color); //top 
+	DrawFilledRect(x, y, borderPx, h / 3, color); //left 
+	DrawFilledRect(x, y + h - h / 3 + borderPx * 2, borderPx, h / 3, color); //left 
+	DrawFilledRect(x + borderPx, y + h + borderPx, w / 3, borderPx, color); //bottom 
+	DrawFilledRect(x + w - w / 3 + borderPx, y + h + borderPx, w / 3, borderPx, color); //bottom 
+	DrawFilledRect(x + w + borderPx, y, borderPx, h / 3, color);//right 
+	DrawFilledRect(x + w + borderPx, y + h - h / 3 + borderPx * 2, borderPx, h / 3, color);//right 
+}
+
 void gui::PeriodicTable(Element& a_x, bool& popup)
 {
-	ImGui::SetNextWindowPos(ImVec2(25, 25));
-	ImGui::SetNextWindowSize(ImVec2(387, 213));
-	ImGui::Begin("periodic table", &popup,
+	ImGui::SetNextWindowPos(ImVec2(57, 79));
+	ImGui::SetNextWindowSize(ImVec2(387, 222));
+	ImGui::Begin("Periodic Table", &popup,
 		ImGuiWindowFlags_NoResize |
 		ImGuiWindowFlags_NoSavedSettings |
 		ImGuiWindowFlags_NoCollapse |
 		ImGuiWindowFlags_NoMove);
 
-
+	//period 1
 	gui::SelectElement(popup, a_x, Element(H), 5, 21);
 	gui::SelectElement(popup, a_x, Element(He), 362, 21);
+
+	//period 2
+	gui::SelectElement(popup, a_x, Element(Li), 5, 42);
+	gui::SelectElement(popup, a_x, Element(Be), 26, 42);
+	gui::SelectElement(popup, a_x, Element(B), 257, 42);
+	gui::SelectElement(popup, a_x, Element(C), 278, 42);
+	gui::SelectElement(popup, a_x, Element(N), 299, 42);
+	gui::SelectElement(popup, a_x, Element(O), 320, 42);
+	gui::SelectElement(popup, a_x, Element(F), 341, 42);
+	gui::SelectElement(popup, a_x, Element(Ne), 362, 42);
+
+	//period 3
+	gui::SelectElement(popup, a_x, Element(Na), 5, 63);
+	gui::SelectElement(popup, a_x, Element(Mg), 26, 63);
+	gui::SelectElement(popup, a_x, Element(Al), 257, 63);
+	gui::SelectElement(popup, a_x, Element(Si), 278, 63);
+	gui::SelectElement(popup, a_x, Element(P), 299, 63);
+	gui::SelectElement(popup, a_x, Element(S), 320, 63);
+	gui::SelectElement(popup, a_x, Element(Cl), 341, 63);
+	gui::SelectElement(popup, a_x, Element(Ar), 362, 63);
+
+	//period 4 (thank God for iteration)
+	for (int i{ 19 }; i <= 36; i++)
+		gui::SelectElement(popup, a_x, static_cast<Element>(i), (i - 19) * 21 + 5, 84);
+
+
+	//period 5
+	for (int i{ 37 }; i <= 54; i++)
+		gui::SelectElement(popup, a_x, static_cast<Element>(i), (i - 37) * 21 + 5, 105);
+
+	//period 6
+	for (int i{55}; i <= static_cast<int>(Element(Rn)); i++)
+		gui::SelectElement(popup, a_x, static_cast<Element>(i), (i - 55) * 21 + 5, 126);
+	
+	//period 7
+	for (int i{static_cast<int>(Element(Fr))}; i <= static_cast<int>(Element(Og)); i++)
+		gui::SelectElement(popup, a_x, static_cast<Element>(i), (i - static_cast<int>(Element(Fr))) * 21 + 5, 147);
+
+	//Lanthanide Series
+	for (int i{ static_cast<int>(Element(La)) }; i <= static_cast<int>(Element(Yb)); i++)
+		gui::SelectElement(popup, a_x, static_cast<Element>(i), (i - static_cast<int>(Element(La))) * 21 + 47, 173);
+
+	//Actinide Series
+	for (int i{ static_cast<int>(Element(Ac)) }; i <= static_cast<int>(Element(No)); i++)
+		gui::SelectElement(popup, a_x, static_cast<Element>(i), (i - static_cast<int>(Element(Ac))) * 21 + 47, 194);
 
 	ImGui::End();
 }
@@ -37,8 +159,132 @@ const char* gui::ElementName(Element element)
 	switch (element)
 	{
 	case (H): return "H";
-	case (Li): return "Li";
 	case (He): return "He";
+
+	case (Li): return "Li";
+	case (Be): return "Be";
+	case (B): return "B";
+	case (C): return "C";
+	case (N): return "N";
+	case (O): return "O";
+	case (F): return "F";
+	case (Ne): return "Ne";
+
+	case (Na): return "Na";
+	case (Mg): return "Mg";
+	case (Al): return "Al";
+	case (Si): return "Si";
+	case (P): return "P";
+	case (S): return "S";
+	case (Cl): return "Cl";
+	case (Ar): return "Ar";
+		
+	case (K): return "K";
+	case (Ca): return "Ca";
+	case (Sc): return "Sc";
+	case (Ti): return "Ti";
+	case (V): return "V";
+	case (Cr): return "Cr";
+	case (Mn): return "Mn";
+	case (Fe): return "Fe";
+	case (Co): return "Co";
+	case (Ni): return "Ni";
+	case (Cu): return "Cu";
+	case (Zn): return "Zn";
+	case (Ga): return "Ga";
+	case (Ge): return "Ge";
+	case (As): return "As";
+	case (Se): return "Se";
+	case (Br): return "Br";
+	case (Kr): return "Kr";
+
+	case (Rb): return "Rb";
+	case (Sr): return "Sr";
+	case (Y): return "Y";
+	case (Zr): return "Zr";
+	case (Nb): return "Nb";
+	case (Mo): return "Mo";
+	case (Tc): return "Tc";
+	case (Ru): return "Ru";
+	case (Rh): return "Rh";
+	case (Pd): return "Pd";
+	case (Ag): return "Ag";
+	case (Cd): return "Cd";
+	case (In): return "In";
+	case (Sn): return "Sn";
+	case (Sb): return "Sb";
+	case (Te): return "Te";
+	case (I): return "I";
+	case (Xe): return "Xe";
+
+	case (Cs): return "Cs";
+	case (Ba): return "Ba";
+	case (Lu): return "Lu";
+	case (Hf): return "Hf";
+	case (Ta): return "Ta";
+	case (W): return "W";
+	case (Re): return "Re";
+	case (Os): return "Os";
+	case (Ir): return "Ir";
+	case (Pt): return "Pt";
+	case (Au): return "Au";
+	case (Hg): return "Hg";
+	case (Tl): return "Tl";
+	case (Pb): return "Pb";
+	case (Bi): return "Bi";
+	case (Po): return "Po";
+	case (At): return "At";
+	case (Rn): return "Rn";
+
+	case (Fr): return "Fr";
+	case (Ra): return "Ra";
+	case (Lr): return "Lr";
+	case (Rf): return "Rf";
+	case (Db): return "Db";
+	case (Sg): return "Sg";
+	case (Bh): return "Bh";
+	case (Hs): return "Hs";
+	case (Mt): return "Mt";
+	case (Ds): return "Ds";
+	case (Rg): return "Rg";
+	case (Cn): return "Cn";
+	case (Nh): return "Nh";
+	case (Fl): return "Fl";
+	case (Mc): return "Mc";
+	case (Lv): return "Lv";
+	case (Ts): return "Ts";
+	case (Og): return "Og";
+
+	case (La): return "La";
+	case (Ce): return "Ce";
+	case (Pr): return "Pr";
+	case (Nd): return "Nd";
+	case (Pm): return "Pm";
+	case (Sm): return "Sm";
+	case (Eu): return "Eu";
+	case (Gd): return "Gd";
+	case (Tb): return "Tb";
+	case (Dy): return "Dy";
+	case (Ho): return "Ho";
+	case (Er): return "Er";
+	case (Tm): return "Tm";
+	case (Yb): return "Yb";
+	
+	case (Ac): return "Ac";
+	case (Th): return "Th";
+	case (Pa): return "Pa";
+	case (U): return "U";
+	case (Np): return "Np";
+	case (Pu): return "Pu";
+	case (Am): return "Am";
+	case (Cm): return "Cm";
+	case (Bk): return "Bk";
+	case (Cf): return "Cf";
+	case (Es): return "Es";
+	case (Fm): return "Fm";
+	case (Md): return "Md";
+	case (No): return "No";
+
 	default: return "Undefined";
 	}
 }
@@ -311,21 +557,27 @@ void gui::Render() noexcept
 	static Element a_5{ H };
 	static Element a_6{ H };
 
-	static Element* currentBasis{ &a_2 };
+	static Element* currentBasis{ &a_1 };
+
+	RGBA colour{40, 40, 40, 255};
+
 
 	switch (currentGeom)
 	{
 	case (Linear): {
 
-		ImGui::SetCursorPos(ImVec2(20, 200));
-		if (ImGui::Button(gui::ElementName(a_1), ImVec2(30, 30)))
+		if (!popup)
+			DrawLine(160, 190, 340, 190, &colour, 10);
+
+		ImGui::SetCursorPos(ImVec2(120, 175));
+		if (ImGui::Button((std::string(gui::ElementName(a_1)) + "##1").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_1;
 			popup = true;
 		}
 
-		ImGui::SetCursorPos(ImVec2(WIDTH-50, 200));
-		if (ImGui::Button(gui::ElementName(a_2), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(350, 175));
+		if (ImGui::Button((std::string(gui::ElementName(a_2)) + "##2").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_2;
 			popup = true;
@@ -333,116 +585,168 @@ void gui::Render() noexcept
 
 	} break;
 	case (Trigonal_planar): {
-		ImGui::SetCursorPos(ImVec2(20, 200));
-		if (ImGui::Button(gui::ElementName(a_1), ImVec2(30, 30)))
+
+		if (!popup)
+		{
+			DrawLine(250, 190, 250, 100, &colour, 10); //a1
+
+			DrawLine(250, 190, 328, 235, &colour, 10); //a2
+
+			DrawLine(250, 190, 172, 235, &colour, 10); //a3
+		}
+
+		ImGui::SetCursorPos(ImVec2(235, 60));
+		if (ImGui::Button((std::string(gui::ElementName(a_1)) + "##1").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_1;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(WIDTH - 50, 200));
-		if (ImGui::Button(gui::ElementName(a_2), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(335, 233));
+		if (ImGui::Button((std::string(gui::ElementName(a_2)) + "##2").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_2;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(200, 50));
-		if (ImGui::Button(gui::ElementName(a_3), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(135, 233));
+		if (ImGui::Button((std::string(gui::ElementName(a_3)) + "##3").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_3;
 			popup = true;
 		}
 	} break;
 	case (Tetrahedral): {
-		ImGui::SetCursorPos(ImVec2(20, 200));
-		if (ImGui::Button(gui::ElementName(a_1), ImVec2(30, 30)))
+
+		if (!popup)
+		{
+			DrawLine(250, 190, 250, 100, &colour, 10); //a1
+
+			DrawLine(250, 190, 335, 220, &colour, 10); //a2
+
+			DrawLine(250, 190, 191, 258, &colour, 10); //a3
+
+			DrawLine(250, 190, 165, 221, &colour, 10); //a4
+		}
+		
+		ImGui::SetCursorPos(ImVec2(235, 60));
+		if (ImGui::Button((std::string(gui::ElementName(a_1)) + "##1").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_1;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(WIDTH - 50, 200));
-		if (ImGui::Button(gui::ElementName(a_2), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(343, 213));
+		if (ImGui::Button((std::string(gui::ElementName(a_2)) + "##2").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_2;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(200, 50));
-		if (ImGui::Button(gui::ElementName(a_3), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(159, 262));
+		if (ImGui::Button((std::string(gui::ElementName(a_3)) + "##3").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_3;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(200, 300));
-		if (ImGui::Button(gui::ElementName(a_4), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(127, 215));
+		if (ImGui::Button((std::string(gui::ElementName(a_4)) + "##4").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_4;
 			popup = true;
 		}
 	} break;
 	case (Trigonal_bipyramidal): {
-		ImGui::SetCursorPos(ImVec2(20, 200));
-		if (ImGui::Button(gui::ElementName(a_1), ImVec2(30, 30)))
+
+		if (!popup)
+		{
+			DrawLine(250, 190, 250, 100, &colour, 10); //a1
+
+			DrawLine(250, 190, 340, 190, &colour, 10); //a2
+
+			DrawLine(250, 190, 250, 280, &colour, 10); //a5
+
+			DrawLine(250, 190, 165, 159, &colour, 10); //a3 set as 70 degrees counterclockwise from a1
+
+			DrawLine(250, 190, 165, 221, &colour, 10); //a4 set as 110 degrees counterclockwise from a1
+		}
+
+		ImGui::SetCursorPos(ImVec2(235, 60));
+		if (ImGui::Button((std::string(gui::ElementName(a_1)) + "##1").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_1;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(WIDTH - 50, 200));
-		if (ImGui::Button(gui::ElementName(a_2), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(350, 175));
+		if (ImGui::Button((std::string(gui::ElementName(a_2)) + "##2").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_2;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(200, 50));
-		if (ImGui::Button(gui::ElementName(a_3), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(127, 137));
+		if (ImGui::Button((std::string(gui::ElementName(a_3)) + "##3").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_3;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(200, 300));
-		if (ImGui::Button(gui::ElementName(a_4), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(127, 213));
+		if (ImGui::Button((std::string(gui::ElementName(a_4)) + "##4").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_4;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(100, 100));
-		if (ImGui::Button(gui::ElementName(a_5), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(235, 290));
+		if (ImGui::Button((std::string(gui::ElementName(a_5)) + "##5").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_5;
 			popup = true;
 		}
 	} break;
 	case (Octahedral): {
-		ImGui::SetCursorPos(ImVec2(20, 200));
-		if (ImGui::Button(gui::ElementName(a_1), ImVec2(30, 30)))
+
+		if (!popup)
+		{
+			DrawLine(250, 190, 250, 100, &colour, 10); //a1
+
+			DrawLine(250, 190, 250, 280, &colour, 10); //a6
+
+			DrawLine(250, 190, 335, 159, &colour, 10); //a2 set as 70 degrees clockwise from a1
+
+			DrawLine(250, 190, 335, 221, &colour, 10); //a3 set as 110 degrees clockwise from a1
+
+			DrawLine(250, 190, 165, 159, &colour, 10); //a5 set as 70 degrees counterclockwise from a1
+
+			DrawLine(250, 190, 165, 221, &colour, 10); //a4 set as 110 degrees counterclockwise from a1
+		}
+
+		ImGui::SetCursorPos(ImVec2(235, 60));
+		if (ImGui::Button((std::string(gui::ElementName(a_1)) + "##1").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_1;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(WIDTH - 50, 200));
-		if (ImGui::Button(gui::ElementName(a_2), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(343, 137));
+		if (ImGui::Button((std::string(gui::ElementName(a_2)) + "##2").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_2;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(200, 50));
-		if (ImGui::Button(gui::ElementName(a_3), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(343, 213));
+		if (ImGui::Button((std::string(gui::ElementName(a_3)) + "##3").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_3;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(200, 300));
-		if (ImGui::Button(gui::ElementName(a_4), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(127, 137));
+		if (ImGui::Button((std::string(gui::ElementName(a_4)) + "##4").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_4;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(100, 100));
-		if (ImGui::Button(gui::ElementName(a_5), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(127, 213));
+		if (ImGui::Button((std::string(gui::ElementName(a_5)) + "##5").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_5;
 			popup = true;
 		}
-		ImGui::SetCursorPos(ImVec2(100, 300));
-		if (ImGui::Button(gui::ElementName(a_6), ImVec2(30, 30)))
+		ImGui::SetCursorPos(ImVec2(235, 290));
+		if (ImGui::Button((std::string(gui::ElementName(a_6)) + "##6").c_str(), ImVec2(30, 30)))
 		{
 			currentBasis = &a_6;
 			popup = true;
