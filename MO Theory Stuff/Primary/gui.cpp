@@ -537,11 +537,11 @@ void gui::Render() noexcept
 	{
 		if (ImGui::BeginMenu("Geometry"))
 		{
-			if (ImGui::MenuItem("Linear", "Ctrl+2")) { currentGeom = Linear; }
-			if (ImGui::MenuItem("Trigonal Planar", "Ctrl+3")) { currentGeom = Trigonal_planar; }
-			if (ImGui::MenuItem("Tetrahedral", "Ctrl+4")) { currentGeom = Tetrahedral; }
-			if (ImGui::MenuItem("Trigonal Bipyramidal", "Ctrl+5")) { currentGeom = Trigonal_bipyramidal; }
-			if (ImGui::MenuItem("Octahedral", "Ctrl+6")) { currentGeom = Octahedral; }
+			if (ImGui::MenuItem("Linear", "")) { currentGeom = Linear; }
+			if (ImGui::MenuItem("Trigonal Planar", "")) { currentGeom = Trigonal_planar; }
+			if (ImGui::MenuItem("Tetrahedral", "")) { currentGeom = Tetrahedral; }
+			if (ImGui::MenuItem("Trigonal Bipyramidal", "")) { currentGeom = Trigonal_bipyramidal; }
+			if (ImGui::MenuItem("Octahedral", "")) { currentGeom = Octahedral; }
 			ImGui::EndMenu();
 		}
 		ImGui::EndMenuBar();
