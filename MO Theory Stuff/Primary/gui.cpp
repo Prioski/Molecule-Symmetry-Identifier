@@ -5,7 +5,43 @@
 #include "../Imgui/imgui_impl_win32.h"
 #include "identifier.h"
 
+void gui::PeriodicTable(Element& a_x, bool& popup)
+{
+	ImGui::SetNextWindowPos(ImVec2(25, 25));
+	ImGui::SetNextWindowSize(ImVec2(387, 213));
+	ImGui::Begin("periodic table", &popup,
+		ImGuiWindowFlags_NoResize |
+		ImGuiWindowFlags_NoSavedSettings |
+		ImGuiWindowFlags_NoCollapse |
+		ImGuiWindowFlags_NoMove);
 
+
+	gui::SelectElement(popup, a_x, Element(H), 5, 21);
+	gui::SelectElement(popup, a_x, Element(He), 362, 21);
+
+	ImGui::End();
+}
+
+void gui::SelectElement(bool& popup, Element& a_x, Element element, int x, int y)
+{
+	ImGui::SetCursorPos(ImVec2(x, y));
+	if (ImGui::Button(gui::ElementName(element), ImVec2(20, 20)))
+	{
+		a_x = element;
+		popup = false;
+	}
+}
+
+const char* gui::ElementName(Element element)
+{
+	switch (element)
+	{
+	case (H): return "H";
+	case (Li): return "Li";
+	case (He): return "He";
+	default: return "Undefined";
+	}
+}
 
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
@@ -265,13 +301,169 @@ void gui::Render() noexcept
 		ImGui::EndMenuBar();
 	}
 
+
+	static bool popup = false;
+
+	static Element a_1{ H };
+	static Element a_2{ H };
+	static Element a_3{ H };
+	static Element a_4{ H };
+	static Element a_5{ H };
+	static Element a_6{ H };
+
+	static Element* currentBasis{ &a_2 };
+
+	switch (currentGeom)
+	{
+	case (Linear): {
+
+		ImGui::SetCursorPos(ImVec2(20, 200));
+		if (ImGui::Button(gui::ElementName(a_1), ImVec2(30, 30)))
+		{
+			currentBasis = &a_1;
+			popup = true;
+		}
+
+		ImGui::SetCursorPos(ImVec2(WIDTH-50, 200));
+		if (ImGui::Button(gui::ElementName(a_2), ImVec2(30, 30)))
+		{
+			currentBasis = &a_2;
+			popup = true;
+		}
+
+	} break;
+	case (Trigonal_planar): {
+		ImGui::SetCursorPos(ImVec2(20, 200));
+		if (ImGui::Button(gui::ElementName(a_1), ImVec2(30, 30)))
+		{
+			currentBasis = &a_1;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(WIDTH - 50, 200));
+		if (ImGui::Button(gui::ElementName(a_2), ImVec2(30, 30)))
+		{
+			currentBasis = &a_2;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(200, 50));
+		if (ImGui::Button(gui::ElementName(a_3), ImVec2(30, 30)))
+		{
+			currentBasis = &a_3;
+			popup = true;
+		}
+	} break;
+	case (Tetrahedral): {
+		ImGui::SetCursorPos(ImVec2(20, 200));
+		if (ImGui::Button(gui::ElementName(a_1), ImVec2(30, 30)))
+		{
+			currentBasis = &a_1;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(WIDTH - 50, 200));
+		if (ImGui::Button(gui::ElementName(a_2), ImVec2(30, 30)))
+		{
+			currentBasis = &a_2;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(200, 50));
+		if (ImGui::Button(gui::ElementName(a_3), ImVec2(30, 30)))
+		{
+			currentBasis = &a_3;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(200, 300));
+		if (ImGui::Button(gui::ElementName(a_4), ImVec2(30, 30)))
+		{
+			currentBasis = &a_4;
+			popup = true;
+		}
+	} break;
+	case (Trigonal_bipyramidal): {
+		ImGui::SetCursorPos(ImVec2(20, 200));
+		if (ImGui::Button(gui::ElementName(a_1), ImVec2(30, 30)))
+		{
+			currentBasis = &a_1;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(WIDTH - 50, 200));
+		if (ImGui::Button(gui::ElementName(a_2), ImVec2(30, 30)))
+		{
+			currentBasis = &a_2;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(200, 50));
+		if (ImGui::Button(gui::ElementName(a_3), ImVec2(30, 30)))
+		{
+			currentBasis = &a_3;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(200, 300));
+		if (ImGui::Button(gui::ElementName(a_4), ImVec2(30, 30)))
+		{
+			currentBasis = &a_4;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(100, 100));
+		if (ImGui::Button(gui::ElementName(a_5), ImVec2(30, 30)))
+		{
+			currentBasis = &a_5;
+			popup = true;
+		}
+	} break;
+	case (Octahedral): {
+		ImGui::SetCursorPos(ImVec2(20, 200));
+		if (ImGui::Button(gui::ElementName(a_1), ImVec2(30, 30)))
+		{
+			currentBasis = &a_1;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(WIDTH - 50, 200));
+		if (ImGui::Button(gui::ElementName(a_2), ImVec2(30, 30)))
+		{
+			currentBasis = &a_2;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(200, 50));
+		if (ImGui::Button(gui::ElementName(a_3), ImVec2(30, 30)))
+		{
+			currentBasis = &a_3;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(200, 300));
+		if (ImGui::Button(gui::ElementName(a_4), ImVec2(30, 30)))
+		{
+			currentBasis = &a_4;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(100, 100));
+		if (ImGui::Button(gui::ElementName(a_5), ImVec2(30, 30)))
+		{
+			currentBasis = &a_5;
+			popup = true;
+		}
+		ImGui::SetCursorPos(ImVec2(100, 300));
+		if (ImGui::Button(gui::ElementName(a_6), ImVec2(30, 30)))
+		{
+			currentBasis = &a_6;
+			popup = true;
+		}
+	} break;
+	}
+
+	if (popup)
+	{
+		gui::PeriodicTable(*currentBasis, popup);
+	}
+
+	/*
+	
 	static char a_1[2];
 	static char a_2[2];
 	static char a_3[2];
 	static char a_4[2];
 	static char a_5[2];
 	static char a_6[2];
-
+	
 	switch (currentGeom)
 	{
 	case (Linear): {
@@ -330,19 +522,46 @@ void gui::Render() noexcept
 		break;
 	}
 	}
-
+	*/
 	static Vector<2> linearVector{};
 	static Vector<3> trigonalPlanarVector{};
 	static Vector<4> tetrahedralVector{};
 	static Vector<5> trigonalBipyramidalVector{};
 	static Vector<6> octahedralVector{};
 
+
 	ImGui::SetCursorPos(ImVec2(gui::WIDTH - 90, gui::HEIGHT - 30));
 	if (ImGui::Button("Identify", ImVec2(80, 20)))
 	{
 		pressedIdentify = true;
 		geometry = currentGeom;
-		//set the vector here
+
+		switch (geometry)
+		{
+		case (Linear): {
+			linearVector = Vector<2>({ static_cast<int>(a_1), static_cast<int>(a_2) });
+		} break;
+		case (Trigonal_planar): {
+			trigonalPlanarVector = Vector<3>({ static_cast<int>(a_1), static_cast<int>(a_2), static_cast<int>(a_3) });
+		} break;
+		case (Tetrahedral): {
+			tetrahedralVector = Vector<4>({ static_cast<int>(a_1), static_cast<int>(a_2), static_cast<int>(a_3), static_cast<int>(a_4) });
+		} break;
+		case (Trigonal_bipyramidal): {
+			trigonalBipyramidalVector = Vector<5>({ static_cast<int>(a_1), static_cast<int>(a_2), static_cast<int>(a_3), static_cast<int>(a_4), static_cast<int>(a_5) });
+		} break;
+		case (Octahedral):
+			octahedralVector = Vector<6>({ static_cast<int>(a_1), static_cast<int>(a_2), static_cast<int>(a_3), static_cast<int>(a_4), static_cast<int>(a_5), static_cast<int>(a_6) });
+		}
+	}
+
+	/*
+	ImGui::SetCursorPos(ImVec2(gui::WIDTH - 90, gui::HEIGHT - 30));
+	if (ImGui::Button("Identify", ImVec2(80, 20)))
+	{
+		pressedIdentify = true;
+		geometry = currentGeom;
+
 		switch (geometry)
 		{
 		case (Linear): {
@@ -361,7 +580,7 @@ void gui::Render() noexcept
 			octahedralVector = Vector<6>({ static_cast<int>(a_1[0]), static_cast<int>(a_2[0]), static_cast<int>(a_3[0]), static_cast<int>(a_4[0]), static_cast<int>(a_5[0]), static_cast<int>(a_6[0])});
 		}
 	}
-
+	*/
 	if (pressedIdentify) 
 	{
 		switch (geometry)

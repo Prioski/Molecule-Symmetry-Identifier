@@ -36,4 +36,8 @@ namespace gui
 	void Render() noexcept;
 
 	//Options
+
+	void PeriodicTable(Element& a_x, bool& popup);
+	void SelectElement(bool& popup, Element& a_x, Element element, int x, int y);
+	const char* ElementName(Element element = Element(Li));
 }
