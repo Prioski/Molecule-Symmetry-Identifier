@@ -24,6 +24,7 @@
     <ProjectGuid>{8701be87-6583-4e01-bd86-a595f1dd11b4}</ProjectGuid>
     <RootNamespace>MOTheoryStuff</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Molecule Symmetry Identifier</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
